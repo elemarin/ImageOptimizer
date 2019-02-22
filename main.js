@@ -8,16 +8,27 @@ path = "imgs/portrait.jpg";
 const readStream = fs.createReadStream(path);
 
 //returns a sharp object
-var image = webp.convert(readStream);
-
-resizer.resize(image, 230, 150);
-
-image.toFile("test.webp");
-
-
-// resizer.resize(image, 1000, 150);
-
-// image.toFile("test2.webp");
+webp.optimize(readStream, {
+    filename: "configtest.webp",
+    size: {
+        width: 500,
+        height: 500
+    }
+});
 
 
+webp.optimize(readStream, {
+    filename: "secondtest.webp",
+    size: {
+        width: 300,
+        height: 100
+    }
+});
 
+webp.optimize(readStream, {
+    filename: "thirdtest.webp",
+    size: {
+        width: 800,
+        height: 50
+    }
+});
