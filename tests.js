@@ -1,35 +1,18 @@
-const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
-const ffmpeg = require('fluent-ffmpeg');
-ffmpeg.setFfmpegPath(ffmpegPath);
-
+const ffmpeg = require('ffmpeg-stream').ffmpeg;
 const fs = require('fs');
 
+converter = ffmpeg();
 
-// let stream = fs.createReadStream('./spiderman.gif');
+input = converter.input({
+    f: 'gif',
+    buffer: 'true'
+});
 
-// ffmpeg(stream)
-//     .inputFormat('gif')
+fs.createReadStream("temp/spiderman.gif").pipe(input);
 
+converter.output("GIF4.mp4", {
+    f: 'mp4',
+    buffer: true
+})
 
-//     .outputOptions([
-//         '-movflags faststart',
-//         '-pix_fmt yuv420p',
-//         '-vf scale=trunc(iw/2)*2:trunc(ih/2)*2',
-//         'video.mp4'
-//     ])  
-
-// // command.save('./spidermantest.mp4');
-
-let stream = fs.createReadStream('./spiderman.gif');
-
-var proc = ffmpeg(stream)
-    .inputOptions([
-        '-f gif'
-    ])
-    .outputOptions([
-        '-movflags faststart',
-        '-pix_fmt yuv420p',
-        '-vf "scale=trunc(iw/2)*2:trunc(ih/2)*2"'])
-    .format('mp4')
-    .output('out.mp4')
-    .run();
+converter.run();

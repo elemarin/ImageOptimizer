@@ -1,4 +1,6 @@
 const sharp = require("sharp");
+const logger = require('./logger');
+const fs = require('fs');
 
 /**
  * This function receives a readable stream as a parameter
@@ -8,15 +10,29 @@ const sharp = require("sharp");
  * @returns {stream}
  */
 function optimize(image, config) {
-    let transformer = sharp();
-    transformer.webp();
-    
-    if(config.size){
-        transformer.resize(config.size.width, config.size.height, {withoutEnlargement: true});
+    let width = config.size.width || undefined;
+    let height = config.size.height || undefined;
+    let transform = sharp();
+
+    transform.on('finish', err => {
+        logger.log("info", `Succesfully compressed ${config.filename}.webP ${err}`);
+    })
+
+    transform.on('error', err => {
+        logger.log("error", `Failed to compress ${config.filename}.webP ${err}`);
+    })
+
+    transform.webp();
+
+    if (config.size) {
+        transform.resize(width, height, {
+            withoutEnlargement: true
+        });
     }
 
-    transformer.toFile(`./compressed/webp/${config.filename}.webp`);
-    return image.pipe(transformer);
+    //transform.toFile(`./compressed/webp/${config.filename}.webp`);
+
+    return image.pipe(transform);
 }
 
 
