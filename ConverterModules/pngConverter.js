@@ -8,30 +8,35 @@ const logger = require('./logger');
  * @param {stream} readableStream
  * @returns {stream}
  */
-function optimize(readableStream, config) {
+function optimize(image, config) {
 
-    let transformer = sharp();
-    transformer.png({
+    let width = config.size.width || undefined;
+    let height = config.size.height || undefined;
+    let transform = sharp();
+
+    transform.on('finish', err => {
+        logger.log("info", `Succesfully compressed ${config.filename}.png ${err}`);
+    })
+
+    transform.on('error', err => {
+        logger.log("error", `Failed to compress ${config.filename}.png ${err}`);
+    })
+
+    transform.png({
         progressive: true, 
         quality: 80
     })
 
-    transformer.on('finish', err => {
-        logger.log("info", `succesfully transcoded ${config.filename}.png`);
-    })
-
-    transformer.on('error', err => {
-        logger.log("error", `Failed to transcode ${config.filename}.png`);
-    })
-    
-    if(config.size){
-        transformer.resize(config.size.width, config.size.height, {withoutEnlargement: true});
+    if (config.size) {
+        transform.resize(width, height, {
+            withoutEnlargement: true
+        });
     }
 
-    transformer.toFile(`./compressed/png/${config.filename}.png`);
+    //transform.toFile(`./compressed/webp/${config.filename}.webp`);
 
-    transformer.emit('error', new Error('failed'));
-    return readableStream.pipe(transformer);
+    return image.pipe(transform);
+
 }
 
 module.exports = {

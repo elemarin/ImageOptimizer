@@ -30,8 +30,6 @@ function optimize(image, config) {
         });
     }
 
-    //transform.toFile(`./compressed/webp/${config.filename}.webp`);
-
     return image.pipe(transform);
 }
 

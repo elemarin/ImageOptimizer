@@ -8,27 +8,35 @@ const logger = require('./logger');
  * @param {stream} readableStream
  * @returns {stream}
  */
-function optimize(readableStream, config) {
+function optimize(image, config) {
 
-    let transformer = sharp();
-    transformer.jpeg({
-        progressive: true
-    });
-    
-    transformer.on('finish', err => {
-        logger.log("info", `succesfully compressed ${config.filename}.jpeg`);
+
+
+    let width = config.size.width || undefined;
+    let height = config.size.height || undefined;
+    let transform = sharp();
+
+    transform.on('finish', err => {
+        logger.log("info", `Succesfully compressed ${config.filename}.jpg ${err}`);
     })
 
-    transformer.on('error', err => {
-        logger.log("error", `Failed to compress ${config.filename}.jpeg`);
+    transform.on('error', err => {
+        logger.log("error", `Failed to compress ${config.filename}.jpg ${err}`);
     })
 
-    if(config.size){
-        transformer.resize(config.size.width, config.size.height, {withoutEnlargement: true});
+    transform.jpeg({
+            progressive: true
+        });
+
+    if (config.size) {
+        transform.resize(width, height, {
+            withoutEnlargement: true
+        });
     }
 
-    transformer.toFile(`./compressed/jpg/${config.filename}.jpg`);
-    return readableStream.pipe(transformer);
+    //transform.toFile(`./compressed/webp/${config.filename}.webp`);
+
+    return image.pipe(transform);
 }
 
 module.exports = {
