@@ -22,12 +22,23 @@ function optimize(image, config) {
         logger.log("error", `Failed to compress ${config.filename}.webP ${err}`);
     })
 
-    transform.webp();
+    transform.toFormat(config.format, {
+        quality: config.quality
+    });
+
+    // transform.webp({
+    //     quality: config.quality
+    // });
 
     if (config.size) {
         transform.resize(width, height, {
-            withoutEnlargement: true
+            fit: config.mode,
+            background: { r: 255, g: 255, b: 255, alpha: 1 }
         });
+
+        if(config.resizeMethod === "MaxFit"){
+            transform.max();
+        }
     }
 
     return image.pipe(transform);

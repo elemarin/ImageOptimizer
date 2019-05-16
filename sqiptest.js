@@ -12,4 +12,4 @@ function optimizeImagesInPath(directory) {
     });
 }
 
-optimizeImagesInPath('./Homes');
+optimizeImagesInPath('./images');

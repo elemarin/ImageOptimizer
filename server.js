@@ -1,93 +1,99 @@
 const path = require('path');
 const express = require('express');
 const fs = require('fs');
-const webp = require('./ConverterModules/webpConverter');
 const jpg = require('./ConverterModules/jpgConverter');
+const png = require('./ConverterModules/pngConverter');
+const svg = require('./ConverterModules/svgConverter');
+const webp = require('./ConverterModules/webpConverter');
 const cache = require('./ConverterModules/cacheService');
-// /**
-//  *
-//  *
-//  * @param {string} path file name and location
-//  * @param {string} extension file extension
-//  * @returns
-//  */
-// function getFilePath(path, extension){
-//     let filename = path.replace(extension, '');
-
-//     return glob.sync(`${filename}.*`)[0] || "";
-
-// };
-
-//used to find a photo with a specific name, that might not match the extension
-//let fullPath = getFilePath(file, extension);
-
-
-function saveImage(image, config) {
-    let fullPath = `./compressed/${config.extension.replace(".", "")}/${config.filepath}`;
-    //fullPath.replace(`${config.filename}.${config.extension}`, "");
-    fullPath = path.dirname(fullPath);
-    fs.mkdir(fullPath, {
-        recursive: true
-    }, function (err) {
-        if (err) {
-            throw err;
-        }
-
-
-        let writeStream = fs.createWriteStream(`${fullPath}/${config.filename}_${config.size.width}x${config.size.height}${config.extension}`);
-        image.pipe(writeStream);
-    });
-
-}
+const streamToBuffer = require('./ConverterModules/streamToBuffer');
+const resizeProfiles = require('./resizer_profiles.json');
 
 var dir = path.join(__dirname, 'public');
 
 server = express();
 
-server.get('*', function (req, res) {
-
+server.get('*', async function (req, res) {
     let extension = path.extname(req.path);
     let filename = path.basename(req.path, path.extname(req.path));
     let file = path.join(dir, req.path);
-    let type = `image/${extension}`.replace(".", "");
+    let resizeMethod = "BestFit";
+    let profileName = filename.substring(0, filename.indexOf("_")) || undefined;
 
     //Parse the query string parameters
     let width = parseInt(req.query.width) || parseInt(req.query.w) || parseInt(req.query.maxwidth);
-    let height = parseInt(req.query.height) || parseInt(req.query.h) ||parseInt(req.query.maxheight);
+    let height = parseInt(req.query.height) || parseInt(req.query.h) || parseInt(req.query.maxheight);
+    let quality = parseInt(req.query.quality) || 80;
+    let mode = req.query.mode === "crop" ? "cover" : "contain";
+    let format = req.query.format || extension.replace('.', '');
+    let type = `image/${format}`;
 
-    //load the image into a readStream
-    let image = fs.createReadStream(file);
+    //set client-side cache to 1 day
+    res.set('Cache-Control', 'max-age=86400');
 
-    let supportsWebp = req.accepts().find(function (element) {
-        return element == "image/webp";
-    });
+    //means the url comes with a resize parameter
+    if (profileName) {
+        filename = filename.replace(`${profileName}_`, "");
+        file = file.replace(`${profileName}_`, "");
+        let profile = resizeProfiles[profileName];
 
-    image.on('open', function () {
+        if (profile) {
+            width = profile.width;
+            height = profile.height;
+            resizeMethod = profile.resizeMethod;
+        }
+
+    }
+
+    //try to fetch the image from cache
+    let cachedImage = cache.getValue(req.originalUrl);
+
+    if (cachedImage !== undefined) {
+        res.set('Content-Type', cachedImage.type);
+        res.send(cachedImage.image);
+    } else {
+        //load the image into a readStream
+        let image = fs.createReadStream(file);
+
+        image.on('error', function () {
+            res.set('Content-Type', 'text/plain');
+            res.status(404).end('Not found');
+        });
 
         let config = {
             filename: filename,
             filepath: req.path,
             extension: extension.replace(".", ""),
+            resizeMethod: resizeMethod,
+            mode: mode,
+            format: format,
+            quality: quality,
             size: {
                 width: width,
                 height: height
             }
         }
-
         let optimizedImage;
 
         switch (extension) {
             case ".jpg" || ".jpeg":
                 optimizedImage = jpg.optimize(image, config);
                 break;
-            /*if(supportsWebp){
-                config.extension = ".webp";
-                type = "image/webp";
+            case ".png":
+                optimizedImage = png.optimize(image, config);
+                break;
+            case ".webp":
                 optimizedImage = webp.optimize(image, config);
-            }
-            else{
-            } */
+                break;
+            case ".svg":
+                if (req.query.format) {
+                    optimizedImage = svg.optimize(image, config);
+                } else {
+                    type = "image/svg+xml";
+                    optimizedImage = image;
+                }
 
+                break;
             default:
                 //return the HD image if the extension doesn't match any
                 optimizedImage = image;
@@ -96,18 +102,19 @@ server.get('*', function (req, res) {
 
         res.set('Content-Type', type);
         optimizedImage.pipe(res);
-        //saveImage(optimizedImage, config);
 
-    });
 
-    image.on('error', function () {
-        res.set('Content-Type', 'text/plain');
-        res.status(404).end('Not found');
-    });
+
+        res.on('finish', async () => {
+            cache.storeValue(req.originalUrl, {
+                type: type,
+                image: await streamToBuffer(optimizedImage)
+            });
+        })
+    }
+
 });
 
-
-
-server.listen(process.env.PORT || 8000, () => {
+server.listen(process.env.PORT || 8082, () => {
     console.log("Server started!");
 })

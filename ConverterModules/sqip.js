@@ -7,8 +7,8 @@ function optimize(filepath){
 
         const result = sqip({
         filename: filepath,
-        numberOfPrimitives: 10,
-        blur: 8
+        numberOfPrimitives: 500,
+        blur: 0
     })
     
     let output = fs.createWriteStream(`${filename}.svg`);

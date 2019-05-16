@@ -1,0 +1,274 @@
+{
+    "asl": {
+        "width": 91,
+        "height": 70,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": false
+    }, 
+    "cbr": {
+        "width": 590,
+        "height": 0,
+        "resizeMethod": "FixedWidth",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": false
+    }, 
+    "cdmain": {
+        "width": 460,
+        "height": 307,
+        "resizeMethod": "BestFit",
+        "outputFormat": "jpg",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": false
+    }, 
+    "cdthumb": {
+        "width": 180,
+        "height": 120,
+        "resizeMethod": "BestFit",
+        "outputFormat": "jpg",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": false
+    },
+    "comspotlight": {
+        "width": 75,
+        "height": 58,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "featured": {
+        "width": 160,
+        "height": 120,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    }, 
+    "flplarge": {
+        "width": 780,
+        "height": 956,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "flpmed": {
+        "width": 390,
+        "height": 478,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "homnb": {
+        "width": 120,
+        "height": 80,
+        "resizeMethod": "BestFit",
+        "outputFormat": "jpg",
+        "filePrefix": "homnb_",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "hommain": {
+        "width": 460,
+        "height": 307,
+        "resizeMethod": "BestFit",
+        "outputFormat": "jpg",
+        "filePrefix": "hommain_",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "homthumb": {
+        "width": 180,
+        "height": 120,
+        "resizeMethod": "BestFit",
+        "outputFormat": "jpg",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "large": {
+        "width": 174,
+        "height": 174,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "map": {
+        "width": 325,
+        "height": 282,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "mapmed": {
+        "width": 200,
+        "height": 65,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "mapsmall": {
+        "width": 60,
+        "height": 35,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "medium": {
+        "width": 0,
+        "height": 58,
+        "resizeMethod": "FixedHeight",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "results": {
+        "width": 75,
+        "height": 58,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "small": {
+        "width": 75,
+        "height": 58,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "spotlight": {
+        "width": 91,
+        "height": 70,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "800": {
+        "width": 800,
+        "height": 0,
+        "resizeMethod": "BestFit",
+        "outputFormat": "jpg",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "1024": {
+        "width": 1024,
+        "height": 0,
+        "resizeMethod": "BestFit",
+        "outputFormat": "jpg",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "1280": {
+        "width": 1280,
+        "height": 0,
+        "resizeMethod": "BestFit",
+        "outputFormat": "jpg",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "blhmtb": {
+        "width": 75,
+        "height": 58,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "blhmmain": {
+        "width": 460,
+        "height": 307,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "blbkltb": {
+        "width": 200,
+        "height": 65,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "blagttb": {
+        "width": 86,
+        "height": 122,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "bsclarge": {
+        "width": 608,
+        "height": 406,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "bscthumb": {
+        "width": 180,
+        "height": 120,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "bscaward": {
+        "width": 91,
+        "height": 70,
+        "resizeMethod": "BestFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    },
+    "max1500": {
+        "width": 1500,
+        "height": 1500,
+        "resizeMethod": "MaxFit",
+        "outputFormat": "",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white",
+        "validateWidth": true
+    }
+}

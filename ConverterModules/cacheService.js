@@ -1,7 +1,7 @@
 const NodeCache = require("node-cache");
 
 const cache = new NodeCache({
-    stdTTL: 20
+    stdTTL: 24*60*60 //24h in s
 });
 
 function storeValue(key, value){

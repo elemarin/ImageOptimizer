@@ -1,0 +1,33 @@
+{
+    "asl": {
+        "width": 91,
+        "height": 70,
+        "quality": 85, 
+        "resizeMethod": "BestFit",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white", 
+        "validateWidth": false,
+        "outputFormat": ""
+
+    },
+    "cbr": {
+        "width": 590,
+        "height": 0,
+        "quality": 85, 
+        "resizeMethod": "FixedWidth",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white", 
+        "validateWidth": false,
+        "outputFormat": ""
+    },
+    "cdmain": {
+        "width": 460,
+        "height": 307,
+        "quality": 85, 
+        "resizeMethod": "BestFit",
+        "useBackgroundMatte": true,
+        "backgroundColor": "white", 
+        "validateWidth": false,
+        "outputFormat": "jpg"
+    }
+}

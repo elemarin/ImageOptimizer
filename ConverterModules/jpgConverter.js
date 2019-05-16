@@ -17,21 +17,27 @@ function optimize(image, config) {
     let transform = sharp();
 
     transform.on('finish', err => {
-        logger.log("info", `Succesfully compressed ${config.filename}.jpg ${err}`);
+        logger.log("info", `Succesfully compressed ${config.filename}.jpg`);
     })
 
     transform.on('error', err => {
-        logger.log("error", `Failed to compress ${config.filename}.jpg ${err}`);
+        logger.log("error", `Failed to compress ${config.filename}.jpg`);
     })
 
-    transform.jpeg({
-            progressive: true
-        });
+    transform.toFormat(config.format, {
+        progressive: true,
+        quality: config.quality
+    });
 
     if (config.size) {
         transform.resize(width, height, {
-            withoutEnlargement: true
+            fit: config.mode,
+            background: { r: 255, g: 255, b: 255, alpha: 1 }
         });
+
+        if(config.resizeMethod === "MaxFit"){
+            transform.max();
+        }
     }
 
     //transform.toFile(`./compressed/webp/${config.filename}.webp`);

@@ -10,27 +10,23 @@ const logger = require('./logger');
  */
 function optimize(image, config) {
 
+
+
     let width = config.size.width || undefined;
     let height = config.size.height || undefined;
     let transform = sharp();
 
     transform.on('finish', err => {
-        logger.log("info", `Succesfully compressed ${config.filename}.png ${err}`);
+        logger.log("info", `Succesfully compressed ${config.filename}.svg`);
     })
 
     transform.on('error', err => {
-        logger.log("error", `Failed to compress ${config.filename}.png ${err}`);
+        logger.log("error", `Failed to compress ${config.filename}.svg`);
     })
 
     transform.toFormat(config.format, {
-        progressive: true,
         quality: config.quality
     });
-
-    // transform.png({
-    //     progressive: true, 
-    //     quality: config.quality
-    // })
 
     if (config.size) {
         transform.resize(width, height, {
@@ -44,7 +40,6 @@ function optimize(image, config) {
     }
 
     return image.pipe(transform);
-
 }
 
 module.exports = {
